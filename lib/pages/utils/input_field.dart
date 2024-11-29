@@ -56,14 +56,15 @@ class InputField extends StatelessWidget {
     return IconButton(
         tooltip: "Add",
         style: IconButton.styleFrom(
-            backgroundColor: Colors.black,
+            backgroundColor: Colors.blue,
             shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0))),
+              borderRadius: BorderRadius.circular(10.0),
+            )),
         onPressed: onPressed,
         icon: Icon(
           Icons.add,
           color: Colors.white,
-          size: 37.0,
+          size: 40.0,
         ));
   }
 }
