@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:todo_list/pages/utils/input_field.dart';
+import 'package:todo_list/pages/utils/to_do_list.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -13,7 +14,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final TextEditingController _controller = TextEditingController();
 
-  final List<String> todos = [];
+  final List<String> _todos = [];
 
   @override
   Widget build(BuildContext context) {
@@ -21,18 +22,23 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Color.fromARGB(255, 243, 242, 248),
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 243, 242, 248),
+        surfaceTintColor: Color.fromARGB(255, 243, 242, 248),
+        elevation: 0.0,
         title: Text("To-Do List"),
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            InputField(
-              controller: _controller,
-              onPressed: addToDo,
-            ),
-          ],
-        ),
+      body: Column(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          InputField(
+            controller: _controller,
+            onPressed: addToDo,
+          ),
+          SizedBox(
+            height: 20.0,
+          ),
+          ToDoList(todos: _todos)
+        ],
       ),
     );
   }
@@ -41,10 +47,9 @@ class _HomePageState extends State<HomePage> {
   void addToDo() {
     if (_controller.text.isNotEmpty) {
       setState(() {
-        todos.add(_controller.text);
+        _todos.add(_controller.text);
         _controller.clear();
       });
     }
-    print(todos);
   }
 }
