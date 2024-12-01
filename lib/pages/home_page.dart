@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:todo_list/pages/utils/input_field.dart';
-import 'package:todo_list/pages/utils/to_do_list.dart';
+import 'package:todo_list/pages/utils/to_do_tile.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -37,7 +37,21 @@ class _HomePageState extends State<HomePage> {
           SizedBox(
             height: 20.0,
           ),
-          ToDoList(todos: _todos)
+          Expanded(
+            child: ListView.builder(
+              itemCount: _todos.length,
+              itemBuilder: (context, index) {
+                return ToDoTile(
+                  todo: _todos[index],
+                  onTap: () {
+                    setState(() {
+                      _todos.removeAt(index);
+                    });
+                  },
+                );
+              },
+            ),
+          )
         ],
       ),
     );
@@ -51,5 +65,11 @@ class _HomePageState extends State<HomePage> {
         _controller.clear();
       });
     }
+  }
+
+  void deleteToDo() {
+    setState(() {
+      _todos.remove("");
+    });
   }
 }
