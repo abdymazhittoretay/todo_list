@@ -16,11 +16,32 @@ class ToDoTile extends StatelessWidget {
       decoration: BoxDecoration(
           color: Colors.white, borderRadius: BorderRadius.circular(20.0)),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            todo,
-            style: TextStyle(fontSize: 16.0),
+          Expanded(
+            child: Row(
+              children: [
+                Checkbox(
+                  value: false,
+                  onChanged: (value) {},
+                  // turns off padding and margin in checkbox
+                  visualDensity: VisualDensity(horizontal: -4, vertical: -4),
+                ),
+                SizedBox(
+                  width: 20.0,
+                ),
+                Expanded(
+                  child: Text(
+                    todo,
+                    style: TextStyle(fontSize: 16.0),
+                    overflow: TextOverflow.clip,
+                    softWrap: true,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            width: 20.0,
           ),
           GestureDetector(
             onTap: onTap,
@@ -28,14 +49,16 @@ class ToDoTile extends StatelessWidget {
               width: 55,
               height: 55,
               decoration: BoxDecoration(
-                  color: Colors.red, borderRadius: BorderRadius.circular(10.0)),
+                color: Colors.red,
+                borderRadius: BorderRadius.circular(10.0),
+              ),
               child: Icon(
                 Icons.delete,
                 color: Colors.white,
                 size: 25,
               ),
             ),
-          )
+          ),
         ],
       ),
     );
