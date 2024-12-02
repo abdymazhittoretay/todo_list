@@ -14,7 +14,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final TextEditingController _controller = TextEditingController();
 
-  final List<String> _todos = [];
+  final List _todos = [];
 
   @override
   Widget build(BuildContext context) {
@@ -42,10 +42,16 @@ class _HomePageState extends State<HomePage> {
               itemCount: _todos.length,
               itemBuilder: (context, index) {
                 return ToDoTile(
-                  todo: _todos[index],
+                  todo: _todos[index][0],
                   onTap: () {
                     setState(() {
                       _todos.removeAt(index);
+                    });
+                  },
+                  checkboxValue: _todos[index][1],
+                  onChanged: (value) {
+                    setState(() {
+                      _todos[index][1] = value;
                     });
                   },
                 );
@@ -61,15 +67,9 @@ class _HomePageState extends State<HomePage> {
   void addToDo() {
     if (_controller.text.isNotEmpty) {
       setState(() {
-        _todos.add(_controller.text);
+        _todos.add([_controller.text, false]);
         _controller.clear();
       });
     }
-  }
-
-  void deleteToDo() {
-    setState(() {
-      _todos.remove("");
-    });
   }
 }

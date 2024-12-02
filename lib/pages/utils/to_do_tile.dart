@@ -4,9 +4,16 @@ import 'package:flutter/material.dart';
 
 class ToDoTile extends StatelessWidget {
   final String todo;
+  final bool checkboxValue;
   final void Function()? onTap;
+  final void Function(bool?)? onChanged;
 
-  const ToDoTile({super.key, required this.todo, required this.onTap});
+  const ToDoTile(
+      {super.key,
+      required this.todo,
+      required this.onTap,
+      required this.checkboxValue,
+      required this.onChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +28,9 @@ class ToDoTile extends StatelessWidget {
             child: Row(
               children: [
                 Checkbox(
-                  value: false,
-                  onChanged: (value) {},
+                  activeColor: Colors.black,
+                  value: checkboxValue,
+                  onChanged: onChanged,
                   // turns off padding and margin in checkbox
                   visualDensity: VisualDensity(horizontal: -4, vertical: -4),
                 ),
@@ -32,7 +40,11 @@ class ToDoTile extends StatelessWidget {
                 Expanded(
                   child: Text(
                     todo,
-                    style: TextStyle(fontSize: 16.0),
+                    style: TextStyle(
+                        fontSize: 16.0,
+                        decoration: checkboxValue
+                            ? TextDecoration.lineThrough
+                            : TextDecoration.none),
                     overflow: TextOverflow.clip,
                     softWrap: true,
                   ),
