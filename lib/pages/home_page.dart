@@ -41,7 +41,6 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true,
       ),
       body: Column(
-        mainAxisSize: MainAxisSize.max,
         children: [
           InputField(
             controller: _controller,
@@ -50,29 +49,36 @@ class _HomePageState extends State<HomePage> {
           SizedBox(
             height: 20.0,
           ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: db.todos.length,
-              itemBuilder: (context, index) {
-                return ToDoTile(
-                  todo: db.todos[index][0],
-                  onTap: () {
-                    setState(() {
-                      db.todos.removeAt(index);
-                    });
-                    db.updateData();
-                  },
-                  checkboxValue: db.todos[index][1],
-                  onChanged: (value) {
-                    setState(() {
-                      db.todos[index][1] = value;
-                    });
-                    db.updateData();
-                  },
-                );
-              },
-            ),
-          )
+          db.todos.isNotEmpty
+              ? Expanded(
+                  child: ListView.builder(
+                    itemCount: db.todos.length,
+                    itemBuilder: (context, index) {
+                      return ToDoTile(
+                        todo: db.todos[index][0],
+                        onTap: () {
+                          setState(() {
+                            db.todos.removeAt(index);
+                          });
+                          db.updateData();
+                        },
+                        checkboxValue: db.todos[index][1],
+                        onChanged: (value) {
+                          setState(() {
+                            db.todos[index][1] = value;
+                          });
+                          db.updateData();
+                        },
+                      );
+                    },
+                  ),
+                )
+              : Center(
+                  child: Text(
+                    "There are no todos yet",
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                )
         ],
       ),
     );

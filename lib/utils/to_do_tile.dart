@@ -24,6 +24,7 @@ class ToDoTile extends StatelessWidget {
           color: Colors.white, borderRadius: BorderRadius.circular(20.0)),
       child: Row(
         children: [
+          // for wrappable text text
           Expanded(
             child: Row(
               children: [
@@ -37,6 +38,7 @@ class ToDoTile extends StatelessWidget {
                 SizedBox(
                   width: 20.0,
                 ),
+                // for wrappable text text
                 Expanded(
                   child: Text(
                     todo,
@@ -45,6 +47,7 @@ class ToDoTile extends StatelessWidget {
                         decoration: checkboxValue
                             ? TextDecoration.lineThrough
                             : TextDecoration.none),
+                    // for wrappable text text
                     overflow: TextOverflow.clip,
                     softWrap: true,
                   ),
