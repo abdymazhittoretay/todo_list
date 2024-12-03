@@ -49,9 +49,9 @@ class _HomePageState extends State<HomePage> {
           SizedBox(
             height: 20.0,
           ),
-          db.todos.isNotEmpty
-              ? Expanded(
-                  child: ListView.builder(
+          Expanded(
+            child: db.todos.isNotEmpty
+                ? ListView.builder(
                     itemCount: db.todos.length,
                     itemBuilder: (context, index) {
                       return ToDoTile(
@@ -71,14 +71,14 @@ class _HomePageState extends State<HomePage> {
                         },
                       );
                     },
+                  )
+                : Center(
+                    child: Text(
+                      "There are no todos yet...",
+                      style: TextStyle(color: Colors.black, fontSize: 16.0),
+                    ),
                   ),
-                )
-              : Center(
-                  child: Text(
-                    "There are no todos yet",
-                    style: TextStyle(color: Colors.grey),
-                  ),
-                )
+          )
         ],
       ),
     );
