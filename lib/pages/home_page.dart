@@ -1,8 +1,10 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
-import 'package:todo_list/pages/utils/input_field.dart';
-import 'package:todo_list/pages/utils/to_do_tile.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:todo_list/data/database.dart';
+import 'package:todo_list/utils/input_field.dart';
+import 'package:todo_list/utils/to_do_tile.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -14,7 +16,18 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final TextEditingController _controller = TextEditingController();
 
-  final List _todos = [];
+  final hiveBox = Hive.box("ToDoBox");
+
+  ToDoDatabase db = ToDoDatabase();
+
+  @override
+  void initState() {
+    if (hiveBox.get("TODOLIST") != null) {
+      db.loadData();
+    }
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,20 +52,22 @@ class _HomePageState extends State<HomePage> {
           ),
           Expanded(
             child: ListView.builder(
-              itemCount: _todos.length,
+              itemCount: db.todos.length,
               itemBuilder: (context, index) {
                 return ToDoTile(
-                  todo: _todos[index][0],
+                  todo: db.todos[index][0],
                   onTap: () {
                     setState(() {
-                      _todos.removeAt(index);
+                      db.todos.removeAt(index);
                     });
+                    db.updateData();
                   },
-                  checkboxValue: _todos[index][1],
+                  checkboxValue: db.todos[index][1],
                   onChanged: (value) {
                     setState(() {
-                      _todos[index][1] = value;
+                      db.todos[index][1] = value;
                     });
+                    db.updateData();
                   },
                 );
               },
@@ -67,9 +82,10 @@ class _HomePageState extends State<HomePage> {
   void addToDo() {
     if (_controller.text.isNotEmpty) {
       setState(() {
-        _todos.add([_controller.text, false]);
+        db.todos.add([_controller.text, false]);
         _controller.clear();
       });
+      db.updateData();
     }
   }
 }
