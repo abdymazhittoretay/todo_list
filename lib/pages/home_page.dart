@@ -89,11 +89,17 @@ class _HomePageState extends State<HomePage> {
   void addToDo() {
     if (_controller.text.isNotEmpty) {
       setState(() {
-        db.todos.add([_controller.text, false]);
+        db.todos.insert(0, [_controller.text, false]);
         _controller.clear();
       });
       db.updateData();
       NotificationService().showNotifications(title: "Example", body: "Text");
+      NotificationService().scheduledNotification(
+        title: "To Do",
+        body: _controller.text,
+        hour: 11,
+        minute: 00,
+      );
     }
   }
 }
