@@ -34,4 +34,12 @@ class NotificationService {
       iOS: DarwinNotificationDetails(),
     );
   }
+
+  Future showNotifications({
+    int id = 0,
+    String? title,
+    String? body,
+  }) async {
+    notificationsPlugin.show(id, title, body, notificationDetails());
+  }
 }
