@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:todo_list/data/database.dart';
+import 'package:todo_list/services/notification_service.dart';
 import 'package:todo_list/utils/input_field.dart';
 import 'package:todo_list/utils/to_do_tile.dart';
 
@@ -92,6 +93,7 @@ class _HomePageState extends State<HomePage> {
         _controller.clear();
       });
       db.updateData();
+      NotificationService().showNotifications(title: "Example", body: "Text");
     }
   }
 }
