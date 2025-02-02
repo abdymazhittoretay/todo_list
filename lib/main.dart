@@ -3,8 +3,13 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:todo_list/pages/home_page.dart';
+import 'package:todo_list/services/notification_service.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  NotificationService().init();
+
   await Hive.initFlutter();
 
   await Hive.openBox("ToDoBox");
