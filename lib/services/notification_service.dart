@@ -23,4 +23,15 @@ class NotificationService {
 
     await notificationsPlugin.initialize(initSettings);
   }
+
+  NotificationDetails notificationDetails() {
+    return const NotificationDetails(
+      android: AndroidNotificationDetails(
+          "daily_channel_id", "Daily Notifications",
+          channelDescription: "Daily Notifications Channel Description",
+          importance: Importance.max,
+          priority: Priority.high),
+      iOS: DarwinNotificationDetails(),
+    );
+  }
 }
