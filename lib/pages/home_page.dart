@@ -92,8 +92,8 @@ class _HomePageState extends State<HomePage> {
       NotificationService().scheduledNotification(
         title: "To Do",
         body: _controller.text,
-        hour: 11,
-        minute: 00,
+        hour: scheduleNotificationHour(tz.TZDateTime.now(tz.local).hour + 4),
+        minute: 0,
       );
       setState(() {
         db.todos.insert(0, [_controller.text, false]);
@@ -101,5 +101,12 @@ class _HomePageState extends State<HomePage> {
       });
       db.updateData();
     }
+  }
+
+  int scheduleNotificationHour(int hour) {
+    if (hour > 23) {
+      return hour - 23;
+    }
+    return hour;
   }
 }
