@@ -42,14 +42,6 @@ class NotificationService {
     );
   }
 
-  Future showNotifications({
-    int id = 0,
-    String? title,
-    String? body,
-  }) async {
-    notificationsPlugin.show(id, title, body, notificationDetails());
-  }
-
   Future scheduledNotification({
     int id = 1,
     required String title,
@@ -63,6 +55,7 @@ class NotificationService {
       tz.local,
       now.year,
       now.month,
+      now.day,
       hour,
       minute,
     );
@@ -77,7 +70,5 @@ class NotificationService {
       androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
       matchDateTimeComponents: DateTimeComponents.time,
     );
-
-    print("works");
   }
 }

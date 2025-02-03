@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:timezone/timezone.dart' as tz;
 import 'package:todo_list/data/database.dart';
 import 'package:todo_list/services/notification_service.dart';
 import 'package:todo_list/utils/input_field.dart';
@@ -88,18 +89,17 @@ class _HomePageState extends State<HomePage> {
   // Functions
   void addToDo() {
     if (_controller.text.isNotEmpty) {
-      setState(() {
-        db.todos.insert(0, [_controller.text, false]);
-        _controller.clear();
-      });
-      db.updateData();
-      NotificationService().showNotifications(title: "Example", body: "Text");
       NotificationService().scheduledNotification(
         title: "To Do",
         body: _controller.text,
         hour: 11,
         minute: 00,
       );
+      setState(() {
+        db.todos.insert(0, [_controller.text, false]);
+        _controller.clear();
+      });
+      db.updateData();
     }
   }
 }
