@@ -59,6 +59,8 @@ class _HomePageState extends State<HomePage> {
                       return ToDoTile(
                         todo: db.todos[index][0],
                         onTap: () {
+                          NotificationService()
+                              .deleteNotification(id: db.todos[index][2]);
                           setState(() {
                             db.todos.removeAt(index);
                           });
@@ -89,14 +91,28 @@ class _HomePageState extends State<HomePage> {
   // Functions
   void addToDo() {
     if (_controller.text.isNotEmpty) {
+      final int id = tz.TZDateTime.now(tz.local).year +
+          tz.TZDateTime.now(tz.local).month +
+          tz.TZDateTime.now(tz.local).day +
+          tz.TZDateTime.now(tz.local).hour +
+          tz.TZDateTime.now(tz.local).minute +
+          tz.TZDateTime.now(tz.local).second;
       NotificationService().scheduledNotification(
+        id: id,
         title: "To Do",
         body: _controller.text,
         hour: scheduleNotificationHour(tz.TZDateTime.now(tz.local).hour + 4),
         minute: 0,
       );
       setState(() {
-        db.todos.insert(0, [_controller.text, false]);
+        db.todos.insert(
+          0,
+          [
+            _controller.text,
+            false,
+            id,
+          ],
+        );
         _controller.clear();
       });
       db.updateData();

@@ -43,7 +43,7 @@ class NotificationService {
   }
 
   Future scheduledNotification({
-    int id = 1,
+    required int id,
     required String title,
     required String body,
     required int hour,
@@ -70,5 +70,11 @@ class NotificationService {
       androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
       matchDateTimeComponents: DateTimeComponents.time,
     );
+  }
+
+  Future deleteNotification({
+    required int id,
+  }) async {
+    await notificationsPlugin.cancel(id);
   }
 }
